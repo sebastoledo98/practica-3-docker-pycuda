@@ -34,16 +34,13 @@ frontend/
   - pyvips
   - python-multipart
   - numpy
-  - cupy (o la variante apropiada para tu versión de CUDA)
+  - pycuda
 
 Notas:
 - libvips:
   - Ubuntu/Debian: `sudo apt install libvips`
   - macOS (Homebrew): `brew install vips`
   - Windows: usar conda o instalar binarios
-- CuPy / CUDA:
-  - Instala la versión de CuPy adecuada a tu versión de CUDA (ver https://docs.cupy.dev/en/stable/install.html)
-  - Si no tienes GPU, implementa un fallback en CPU para pruebas.
 
 ### Frontend
 - Node >= 18
@@ -178,3 +175,51 @@ imgFiltrada.src = `data:image/jpeg;base64,${data.imagen_filtro}`;
 ```
 
 Muestra los demás metadatos (filtro, tiempo, mask, sigma, blocks, threads) en un panel legible.
+
+## Ejecución con Docker
+
+Estructura de archivos esperada para Docker
+backend/
+  Dockerfile
+  requirements.txt
+  app/
+    main.py
+    ...
+frontend/
+  Dockerfile
+  .env
+  src/
+    App.tsx
+docker-compose.yml
+
+1. Archivo .env para Vite (frontend)
+
+Esto te permite cambiar el nombre del contenedor y el puerto fácilmente.
+
+.env
+
+VITE_BACKEND_HOST=<tu-host-backend>
+VITE_BACKEND_PORT=<tu-puerto-backend>
+
+En tu código Vite:
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+2. Levantar toda la plataforma
+
+docker compose up --build
+
+Luego abre tu navegador en:
+
+http://localhost:3000
+
+El backend queda disponible en:
+
+http://localhost:5000
+
+3. Probar endpoint desde contenedor frontend
+
+Vite usará:
+
+fetch(`${import.meta.env.VITE_BACKEND_URL}/filtros/procesar_imagen`, ...)
+

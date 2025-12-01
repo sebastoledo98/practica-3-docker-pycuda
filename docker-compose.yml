@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+
+  backend:
+    build: ./app
+    container_name: fastapi-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - PIP_BREAK_SYSTEM_PACKAGES=1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    networks:
+      - filtros-network
+
+  frontend:
+    build: ./frontend-pycuda
+    container_name: react-frontend
+    ports:
+      - "3000:3000"   # Acceso desde host → http://localhost:3000
+    environment:
+      - WATCHPACK_POLLING=true
+      - PORT=3000
+    networks:
+      - filtros-network
+
+networks:
+  filtros-network:
+    driver: bridge
+
