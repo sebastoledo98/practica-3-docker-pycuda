@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root {
+  --primary: #2dd4bf; /* Teal */
+  --secondary: #3b82f6; /* Blue */
+  --bg-dark: #0f172a; /* Slate 900 */
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  /* IMPORTANTE: Quitamos el place-items: center que traía Vite por defecto */
+  display: block; 
+  min-height: 100vh;
+}
+
+#root {
+  /* IMPORTANTE: Quitamos el max-width y text-align center de Vite */
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* --- Efectos Visuales --- */
+
+/* Fondo Grid Animado */
+.grid-bg {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+}
+
+/* Efecto Cristal (Glassmorphism) */
+.glass-panel {
+  background: rgba(30, 41, 59, 0.7); /* Slate 800 semitransparente */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.glass-input {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(45, 212, 191, 0.3);
+  outline: none;
+}
+
+/* Texto Neón */
+.neon-text {
+  background: linear-gradient(90deg, #2dd4bf, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 30px rgba(45, 212, 191, 0.5);
+}
+
+/* Botón Principal */
+.primary-btn {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  position: relative;
+  z-index: 1;
+}
+
+.primary-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.primary-btn:hover::before {
+  opacity: 1;
+}
+
+/* Blobs de color de fondo */
+.bg-blob-teal {
+  position: absolute;
+  top: -10%; left: -10%; width: 500px; height: 500px;
+  background: var(--primary);
+  filter: blur(150px); opacity: 0.2; border-radius: 50%;
+  pointer-events: none;
+}
+
+.bg-blob-blue {
+  position: absolute;
+  bottom: -10%; right: -10%; width: 600px; height: 600px;
+  background: var(--secondary);
+  filter: blur(180px); opacity: 0.15; border-radius: 50%;
+  pointer-events: none;
+}
