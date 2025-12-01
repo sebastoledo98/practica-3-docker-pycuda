@@ -64,10 +64,7 @@ source .venv/bin/activate
 
 2. Instalar dependencias
 ```bash
-pip install fastapi uvicorn pyvips python-multipart numpy
-# Instalar CuPy según tu CUDA, por ejemplo:
-# pip install cupy-cuda12x
-# o conda: conda install -c conda-forge cupy
+pip install fastapi uvicorn pyvips python-multipart numpy pycuda
 ```
 
 3. Ejecutar servidor
